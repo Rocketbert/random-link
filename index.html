@@ -1,194 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Random Internet</title>
 
 <style>
-
-html,body{
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:Arial,Helvetica,sans-serif;
+html, body {
+    margin: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(-45deg,#081229,#1d3557,#3a0ca3,#240046,#081229);
-    background-size:400% 400%;
-    animation:bg 18s ease infinite;
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
 }
 
-@keyframes bg{
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
+button {
+    font-size: 22px;
+    padding: 18px 36px;
+    cursor: pointer;
 }
-
-#particles{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-}
-
-.star{
-    position:absolute;
-    background:white;
-    border-radius:50%;
-    width:3px;
-    height:3px;
-    opacity:.8;
-    animation:float linear infinite;
-}
-
-@keyframes float{
-from{transform:translateY(110vh);}
-to{transform:translateY(-10vh);}
-}
-
-#container{
-    z-index:5;
-    text-align:center;
-}
-
-h1{
-    color:white;
-    font-size:52px;
-    margin-bottom:10px;
-    text-shadow:0 0 25px cyan;
-}
-
-p{
-    color:white;
-    opacity:.75;
-    margin-bottom:40px;
-}
-
-button{
-
-    font-size:32px;
-    font-weight:bold;
-
-    padding:26px 65px;
-
-    border:none;
-    border-radius:80px;
-
-    cursor:pointer;
-
-    color:white;
-
-    background:linear-gradient(90deg,#00c6ff,#0072ff);
-
-    box-shadow:
-    0 0 20px #00bfff,
-    0 0 60px #00bfff;
-
-    transition:.2s;
-}
-
-button:hover{
-    transform:scale(1.08);
-    box-shadow:
-    0 0 40px #00bfff,
-    0 0 100px #00bfff;
-}
-
-button:active{
-    transform:scale(.95);
-}
-
-#status{
-    margin-top:25px;
-    color:white;
-    opacity:.7;
-}
-
 </style>
-</head>
 
+</head>
 <body>
 
-<div id="particles"></div>
-
-<div id="container">
-
-<h1>🌎 Random Internet</h1>
-
-<p>Click below to discover somewhere new.</p>
-
-<button id="go" disabled>
-Loading...
-</button>
-
-<div id="status"></div>
-
-</div>
+<button id="go" disabled>Loading...</button>
 
 <script>
 
-// Floating stars
-
-const particles=document.getElementById("particles");
-
-for(let i=0;i<150;i++){
-
-    const s=document.createElement("div");
-
-    s.className="star";
-
-    s.style.left=Math.random()*100+"vw";
-    s.style.animationDuration=(6+Math.random()*15)+"s";
-    s.style.animationDelay=Math.random()*12+"s";
-    s.style.opacity=.2+Math.random()*.8;
-    s.style.transform=`scale(${0.5+Math.random()*2})`;
-
-    particles.appendChild(s);
-
-}
-
-// ---------- Load websites ----------
-
-let websites=[];
+let websites = [];
 
 fetch("sites.txt")
-.then(r=>r.text())
-.then(text=>{
+.then(r => r.text())
+.then(text => {
 
-    websites=text
+    websites = text
         .split("\n")
-        .map(x=>x.trim())
-        .filter(x=>x.length>0);
+        .map(x => x.trim())
+        .filter(x => x.length > 0);
 
-    document.getElementById("go").disabled=false;
-    document.getElementById("go").innerHTML="🎲 Surprise Me";
-
-    document.getElementById("status").innerHTML=
-        websites.length+" websites loaded.";
-
-})
-.catch(()=>{
-
-    document.getElementById("status").innerHTML=
-        "Couldn't load sites.txt";
+    document.getElementById("go").disabled = false;
+    document.getElementById("go").textContent = "Random Website";
 
 });
 
-// ---------- Button ----------
+document.getElementById("go").onclick = () => {
 
-document.getElementById("go").onclick=function(){
+    const random = Math.floor(Math.random() * websites.length);
 
-    const random=Math.floor(Math.random()*websites.length);
+    window.open(websites[random], "_blank");
 
-    window.open(websites[random],"_blank");
-
-}
+};
 
 </script>
 
