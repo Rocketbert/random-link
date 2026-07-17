@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+<button onclick="randomSite()">Random Site</button>
+
+<script>
+const links = [
+    "https://wikipedia.org",
+    "https://neal.fun",
+    "https://archive.org"
+];
+
+function randomSite() {
+    const url = links[Math.floor(Math.random() * links.length)];
+    window.open(url, "_blank");
+}
+</script>
+</body>
+</html>
